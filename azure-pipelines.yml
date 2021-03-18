@@ -19,11 +19,9 @@ steps:
     feedsToUse: 'select'
     vstsFeed: 'dotnet-color-parser-feed' # A series of numbers and letters
 - task: gitversion/setup@0
-    displayName: 'Install GitTools'
     inputs:
       versionSpec: '5.3.x'
 - task: gitversion/execute@0
-    displayName: 'Calculate SemVer'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
