@@ -39,8 +39,7 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'Nuget-DotNetColorParser'
-- script: dotnet pack /p:PackageVersion=$(GitVersion.NuGetVersion)  # define version variable elsewhere in your pipeline
+#- script: dotnet pack /p:PackageVersion=$(GitVersion.NuGetVersion)  # define version variable elsewhere in your pipeline
 # - task: PublishSymbols@2
 #   inputs:
 #     searchPattern: '**/bin/**/*.pdb'
