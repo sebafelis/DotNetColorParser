@@ -11,8 +11,6 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  GitVersion.SemVer: ''
-  GitVersion.NuGetVersion: ''
 
 steps:
 - task: DotNetCoreCLI@2
