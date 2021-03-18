@@ -11,9 +11,8 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-
-variables:
-  buildConfiguration: 'Release'
+  GitVersion.SemVer: ''
+  GitVersion.NuGetVersion: ''
 
 steps:
 - task: DotNetCoreCLI@2
@@ -21,10 +20,17 @@ steps:
     command: 'restore'
     feedsToUse: 'select'
     vstsFeed: 'dotnet-color-parser-feed' # A series of numbers and letters
+- task: UseGitVersion@5
+  displayName: gitversion
+  inputs:
+    versionSpec: '5.x'
+    updateAssemblyInfo: false
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
+    versioningScheme: byEnvVar
+    versionEnvVar: 'GitVersion.SemVer'
   displayName: 'dotnet build $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
@@ -45,5 +51,5 @@ steps:
     nuGetFeedType: external
     publishFeedCredentials: 'sebafelisNuGetAccount'
     versioningScheme: byEnvVar
-    versionEnvVar: version
+    versionEnvVar: 'GitVersion.NuGetVersion'
 
