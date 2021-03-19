@@ -13,6 +13,9 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 5.8.1
 - task: DotNetCoreCLI@2
   displayName: 'dotnet restore'
   inputs:
