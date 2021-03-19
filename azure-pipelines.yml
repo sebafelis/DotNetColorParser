@@ -1,0 +1,63 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: 5.8.1
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: 'restore'
+    feedsToUse: 'select'
+    feedRestore: 'DotNetColorParser'
+    projects: '**/*.csproj'
+    includeNuGetOrg: true
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.sln'
+    arguments: '--configuration $(buildConfiguration)'
+    versioningScheme: byEnvVar
+    versionEnvVar: 'GitVersion.SemVer'
+  displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    projects: '**/*.sln'
+    includesymbols: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+
+#- script: dotnet pack /p:PackageVersion=$(GitVersion.NuGetVersion)  # define version variable elsewhere in your pipeline
+# - task: PublishSymbols@2
+#   inputs:
+#     searchPattern: '**/bin/**/*.pdb'
+# - task: NuGetAuthenticate@0
+#   inputs:
+#     nuGetServiceConnections: 'sebafelisNuGetAccount'
+# - task: NuGetCommand@2
+#   inputs:
+#     command: push
+#     nuGetFeedType: external
+#     publishFeedCredentials: 'sebafelisNuGetAccount'
+#     versioningScheme: byEnvVar
+#     versionEnvVar: 'GitVersion.NuGetVersion'
+
