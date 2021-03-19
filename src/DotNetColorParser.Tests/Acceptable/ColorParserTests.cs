@@ -59,12 +59,12 @@ namespace DotNetColorParser.Tests.Acceptable
         public void ColorParserClass_UseStaticParseMethod_WithSpecifyOnlyRBGNotation_AndInputValueIsNotInRGBNotation_ThrowInvalidUnkownColorNotationException(string input)
         {
             //Act
-            Action act = () => ColorParser.Parse<RGBNotation>(input);
+            void act() => ColorParser.Parse<RGBNotation>(input);
 
             //Assert
             Assert.Throws<UnkownColorNotationException>(act);
         }
 
-        
+
     }
 }

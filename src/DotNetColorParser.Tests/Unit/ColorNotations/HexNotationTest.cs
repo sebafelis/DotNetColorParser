@@ -1,7 +1,4 @@
 ﻿using DotNetColorParser.ColorNotations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace DotNetColorParser.Tests.Unit.ColorNotations

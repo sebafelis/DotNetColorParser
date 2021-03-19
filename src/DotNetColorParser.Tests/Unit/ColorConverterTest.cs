@@ -1,7 +1,6 @@
 using System;
-using Xunit;
-using DotNetColorParser;
 using System.Drawing;
+using Xunit;
 
 namespace DotNetColorParser.Tests.Unit
 {
@@ -42,7 +41,6 @@ namespace DotNetColorParser.Tests.Unit
         [InlineData(" ")]
         [InlineData("#")]
         [InlineData("#fffffg")]
-        [InlineData("forsa")]
         [InlineData("forsa")]
         [InlineData(null)]
         public void FromHex_WhenInputValueIsIncorrect_ThrowArgumentException(string value)

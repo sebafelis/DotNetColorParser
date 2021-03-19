@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Sebastian Felis</Authors>
     <Company>RoboLynx</Company>
-    <Description>Abstractions foor .Net Standard library parsing color strings and converting them to .Net's Color object. 
+    <Description>Abstractions for .Net Standard library parsing color strings and converting them to .Net's Color object. 
 Library support almost all color notations used in CSS3 and supported color notations are extendable with custom.</Description>
     <Copyright>Sebastian Felis © 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -12,6 +12,8 @@ Library support almost all color notations used in CSS3 and supported color nota
     <RepositoryUrl>https://github.com/sebafelis/DotNetColorParser</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>color parser css abstraction</PackageTags>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Product>DotNetColorParser</Product>
   </PropertyGroup>
 
   <ItemGroup>

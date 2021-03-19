@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DotNetColorParser.Tests
 {
@@ -98,7 +96,7 @@ namespace DotNetColorParser.Tests
             yield return new object[] { " #66666688", 102, 102, 102, 136 };
             yield return new object[] { " 333AAA88", 51, 58, 170, 136 };
             yield return new object[] { " #6668", 102, 102, 102, 136 };
-            yield return new object[] { " 3338", 51, 51, 170, 136 };
+            yield return new object[] { " 3338", 51, 51, 51, 136 };
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();

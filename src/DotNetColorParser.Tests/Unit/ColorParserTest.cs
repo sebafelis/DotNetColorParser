@@ -1,9 +1,7 @@
-﻿using DotNetColorParser.ColorNotations;
-using Moq;
+﻿using Moq;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using Xunit;
 
 namespace DotNetColorParser.Tests.Unit

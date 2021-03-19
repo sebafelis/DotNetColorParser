@@ -1,8 +1,5 @@
-﻿using DotNetColorParser.ColorNotations;
-using Moq;
+﻿using Moq;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace DotNetColorParser.Tests.Unit
@@ -10,7 +7,7 @@ namespace DotNetColorParser.Tests.Unit
     public class ColorNotationProviderTest
     {
         readonly ColorNotationProvider _colorNotations;
-        readonly IColorNotation _colorNotationInstance;        
+        readonly IColorNotation _colorNotationInstance;
 
         public ColorNotationProviderTest()
         {
@@ -55,7 +52,7 @@ namespace DotNetColorParser.Tests.Unit
 
             //Assert
             Assert.True(result);
-            Assert.DoesNotContain(_colorNotationInstance, _colorNotations);           
+            Assert.DoesNotContain(_colorNotationInstance, _colorNotations);
         }
 
         public void RemoveMethod_WithNotRegistredNotation_ReturnFalse()

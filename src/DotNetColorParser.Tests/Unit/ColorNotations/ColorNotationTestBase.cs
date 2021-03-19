@@ -1,14 +1,11 @@
-﻿using DotNetColorParser.ColorNotations;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using Xunit;
 
 namespace DotNetColorParser.Tests.Unit.ColorNotations
 {
     public class ColorNotationTestBase
     {
-        protected void ColorNotation_WhenInputStringIsCorrect_ThenIsMachMethod_ReturnTrue<T>(string input) where T: IColorNotation
+        protected void ColorNotation_WhenInputStringIsCorrect_ThenIsMachMethod_ReturnTrue<T>(string input) where T : IColorNotation
         {
             //Assign
             var colorNotation = Activator.CreateInstance<T>();
@@ -38,7 +35,7 @@ namespace DotNetColorParser.Tests.Unit.ColorNotations
             var colorNotation = Activator.CreateInstance<T>();
 
             //Act
-            Action act = () => colorNotation.IsMatch(null);
+            void act() => colorNotation.IsMatch(null);
 
             //Assert
             Assert.Throws<ArgumentNullException>(act);
@@ -65,7 +62,7 @@ namespace DotNetColorParser.Tests.Unit.ColorNotations
             var colorNotation = Activator.CreateInstance<T>();
 
             //Act
-            Action act = () => colorNotation.Parse(input);
+            void act() => colorNotation.Parse(input);
 
             //Assert
             Assert.Throws<InvalidColorNotationException>(act);

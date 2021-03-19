@@ -2,15 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace DotNetColorParser.ColorNotations
 {
     public class KnownColorNameNotation : ColorNotation, IColorNotation
     {
-        private readonly Regex _nameRE = new Regex(@"^\s*([A-Za-z]+)+\s*$");
-
         private static IEnumerable<string> GetKnowColorNames()
         {
             KnownColor[] colors = (KnownColor[])Enum.GetValues(typeof(KnownColor));
@@ -20,7 +16,7 @@ namespace DotNetColorParser.ColorNotations
             }
         }
 
-        private Lazy<IEnumerable<string>> _knowKolors = new Lazy<IEnumerable<string>>(() => GetKnowColorNames());
+        private readonly Lazy<IEnumerable<string>> _knowKolors = new Lazy<IEnumerable<string>>(() => GetKnowColorNames());
 
         private string CleanString(string str)
         {

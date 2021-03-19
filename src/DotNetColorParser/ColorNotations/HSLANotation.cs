@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using DotNetColorParser;
 
 namespace DotNetColorParser.ColorNotations
 {

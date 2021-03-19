@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>.Net Standard library parsing color strings and converting them to .Net Color object. 
 Library support almost all color notations used in CSS3 and supported color notations are extendable with custom.</Description>
     <Copyright>Sebastian Felis © 2021</Copyright>

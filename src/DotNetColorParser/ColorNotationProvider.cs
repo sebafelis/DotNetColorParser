@@ -77,7 +77,7 @@ namespace DotNetColorParser
 
         public IEnumerator<IColorNotation> GetEnumerator()
         {
-            return _colorNotations.Select(s=>s.Value).OrderBy(o => o.Order).GetEnumerator();
+            return _colorNotations.Select(s => s.Value).OrderBy(o => o.Order).GetEnumerator();
         }
 
         public bool Remove(IColorNotation item)

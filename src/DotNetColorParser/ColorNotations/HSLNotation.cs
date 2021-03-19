@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using DotNetColorParser;
 
 namespace DotNetColorParser.ColorNotations
 {
@@ -53,7 +52,7 @@ namespace DotNetColorParser.ColorNotations
                         }
                     }
                 }
-                
+
                 saturation = double.Parse(match.Groups["saturation"].Value, CultureInfo.InvariantCulture);
                 lightness = double.Parse(match.Groups["lightness"].Value, CultureInfo.InvariantCulture);
 

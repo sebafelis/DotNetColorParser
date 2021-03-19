@@ -4,6 +4,6 @@ namespace DotNetColorParser
 {
     public interface IColorNotationProvider : ICollection<IColorNotation>
     {
-        
+
     }
 }

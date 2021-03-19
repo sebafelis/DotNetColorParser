@@ -1,5 +1,4 @@
-﻿using DotNetColorParser.ColorNotations;
-using System;
+﻿using System;
 using System.Drawing;
 
 namespace DotNetColorParser
