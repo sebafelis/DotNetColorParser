@@ -2,7 +2,7 @@
 using System;
 using Xunit;
 
-namespace DotNetColorParser.Tests.Integration
+namespace DotNetColorParser.Tests.Acceptable
 {
     public class ColorParserTests
     {
