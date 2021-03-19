@@ -24,6 +24,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
+    projects: '**/*.sln'
     arguments: '--configuration $(buildConfiguration)'
     versioningScheme: byEnvVar
     versionEnvVar: 'GitVersion.SemVer'
@@ -36,6 +37,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: pack
+    projects: '**/*.sln'
     includesymbols: true
 - task: PublishBuildArtifacts@1
   inputs:
