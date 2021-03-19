@@ -14,10 +14,13 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
   inputs:
     command: 'restore'
     feedsToUse: 'select'
-    vstsFeed: 'dotnet-color-parser-feed' # A series of numbers and letters
+    feedRestore: 'DotNetColorParser'
+    projects: '**/*.csproj'
+    includeNuGetOrg: true
 - task: gitversion/setup@0
     inputs:
       versionSpec: '5.3.x'
@@ -36,7 +39,8 @@ steps:
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+
 #- script: dotnet pack /p:PackageVersion=$(GitVersion.NuGetVersion)  # define version variable elsewhere in your pipeline
 # - task: PublishSymbols@2
 #   inputs:
