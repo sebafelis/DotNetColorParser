@@ -21,10 +21,6 @@ steps:
     feedRestore: 'DotNetColorParser'
     projects: '**/*.csproj'
     includeNuGetOrg: true
-- task: gitversion/setup@0
-    inputs:
-      versionSpec: '5.3.x'
-- task: gitversion/execute@0
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
@@ -37,6 +33,10 @@ steps:
     command: test
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: pack
+    includesymbols: true
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
