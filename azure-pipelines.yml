@@ -45,6 +45,11 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'push'
+    searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
+    feedPublish: 'DotNetColorParserBuild'
 
 #- script: dotnet pack /p:PackageVersion=$(GitVersion.NuGetVersion)  # define version variable elsewhere in your pipeline
 # - task: PublishSymbols@2
