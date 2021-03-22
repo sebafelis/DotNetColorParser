@@ -21,7 +21,7 @@ steps:
   inputs:
     command: 'restore'
     feedsToUse: 'select'
-    feedRestore: 'DotNetColorParser'
+    feedRestore: 'DotNetColorParser/DotNetColorParserBuild'
     projects: '**/*.csproj'
     includeNuGetOrg: true
 - task: DotNetCoreCLI@2
