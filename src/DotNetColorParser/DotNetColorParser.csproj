@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net45;netstandard2.0;netstandard2.1</TargetFrameworks>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<Description>.Net Standard library parsing color strings and converting them to .Net Color object. Library support almost all color notations used in CSS3 and supported color notations are extendable with custom.
+		</Description>
+		<Copyright>Sebastian Felis © 2021</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/sebafelis/DotNetColorParser</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/sebafelis/DotNetColorParser</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>color parser css</PackageTags>
+		<Authors>Sebastian Felis</Authors>
+		<Company>RoboLynx</Company>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DotNetColorParser.Abstractions\DotNetColorParser.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>
