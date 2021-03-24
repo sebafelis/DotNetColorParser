@@ -25,7 +25,7 @@ namespace DotNetColorParser.Tests.Acceptable
         public void ColorParserClass_HasNewInstance_WithDefaultProvider_ThenParseColorMethod_WithCorrectInputValue_ReturnColor(string input, int outputRed, int outputGreen, int outputBlue, int outputAlpha)
         {
             //Assign
-            var colorParser = new ColorParser(null);
+            var colorParser = new ColorParser(new ColorNotationProvider(true));
 
             //Act
             var actual = colorParser.ParseColor(input);

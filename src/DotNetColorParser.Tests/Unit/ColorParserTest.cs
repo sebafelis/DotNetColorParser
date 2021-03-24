@@ -59,7 +59,7 @@ namespace DotNetColorParser.Tests.Unit
         public void ParseColor_WhenInputStringIsNull_ThrowArgumentException()
         {
             //Assign
-            var colorParser = new ColorParser(null);
+            var colorParser = new ColorParser(new ColorNotationProvider(true));
 
             //Act
             Action act = () => colorParser.ParseColor(null);
@@ -73,7 +73,7 @@ namespace DotNetColorParser.Tests.Unit
         {
             //Assign
             var inputValue = "";
-            var colorParser = new ColorParser(null);
+            var colorParser = new ColorParser(new ColorNotationProvider(true));
 
             //Act
             Action act = () => colorParser.ParseColor(inputValue);
