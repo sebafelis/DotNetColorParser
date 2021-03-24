@@ -62,10 +62,10 @@ steps:
     feedPublish: 'DotNetColorParser/DotNetColorParserBuild'
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
-  condition: $(Build.SourceBranchName)!='main'
+  #condition: $(Build.SourceBranchName)!='main'
 - task: NuGetCommand@2
   displayName: 'NuGet push'
-  condition: $(Build.SourceBranchName)!='main'
+  #condition: $(Build.SourceBranchName)!='main'
   inputs:
     command: push
     publishVstsFeed: 'DotNetColorParser/DotNetColorParserBuild'
