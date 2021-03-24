@@ -5,6 +5,7 @@
 
 trigger:
 - main
+- develop
 
 pool:
   vmImage: 'windows-latest'
@@ -24,6 +25,13 @@ steps:
     feedRestore: 'DotNetColorParser/DotNetColorParserBuild'
     projects: '**/*.csproj'
     includeNuGetOrg: true
+- task: gitversion/setup@0
+  inputs:
+    versionSpec: 5.6.6
+- task: gitversion/execute@0
+  inputs:
+    useConfigFile: true
+    configFilePath: 'GitVersion.yml'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
@@ -42,6 +50,8 @@ steps:
     command: pack
     projects: '**/*.sln'
     includesymbols: true
+    versioningScheme: byEnvVar
+    versionEnvVar: 'GitVersion.NuGetVersion'
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
@@ -50,12 +60,18 @@ steps:
     command: 'push'
     searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
     feedPublish: 'DotNetColorParser/DotNetColorParserBuild'
-
-#- script: dotnet pack /p:PackageVersion=$(GitVersion.NuGetVersion)  # define version variable elsewhere in your pipeline
-# - task: PublishSymbols@2
-#   inputs:
-#     searchPattern: '**/bin/**/*.pdb'
+- task: NuGetAuthenticate@0
+  displayName: 'NuGet Authenticate'
+  condition: $(Build.SourceBranchName)!='main'
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  condition: $(Build.SourceBranchName)!='main'
+  inputs:
+    command: push
+    publishVstsFeed: 'DotNetColorParser/DotNetColorParserBuild'
+    allowPackageConflicts: true
 # - task: NuGetAuthenticate@0
+#   condition: $(Build.SourceBranchName)=='main'
 #   inputs:
 #     nuGetServiceConnections: 'sebafelisNuGetAccount'
 # - task: NuGetCommand@2
@@ -65,4 +81,10 @@ steps:
 #     publishFeedCredentials: 'sebafelisNuGetAccount'
 #     versioningScheme: byEnvVar
 #     versionEnvVar: 'GitVersion.NuGetVersion'
+
+#- script: dotnet pack /p:PackageVersion=$(GitVersion.NuGetVersion)  # define version variable elsewhere in your pipeline
+# - task: PublishSymbols@2
+#   inputs:
+#     searchPattern: '**/bin/**/*.pdb'
+
 
