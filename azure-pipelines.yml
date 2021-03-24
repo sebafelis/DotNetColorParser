@@ -53,13 +53,9 @@ steps:
     versioningScheme: byEnvVar
     versionEnvVar: 'GitVersion.NuGetVersion'
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish artifacts'
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'push'
-    searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
-    feedPublish: 'DotNetColorParser/DotNetColorParserBuild'
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
   #condition: $(Build.SourceBranchName)!='main'
