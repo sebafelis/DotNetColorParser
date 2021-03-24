@@ -3,13 +3,16 @@ using System.Drawing;
 
 namespace DotNetColorParser
 {
+    /// <summary>
+    /// Contains methods converting values from specify color space or notation to ARGB color space.
+    /// </summary>
     public static class ColorConverter
     {
 
         const string outOfRangeExMsg = "Value has to be greater than or equal to {0} and less than or equal to {1}.";
 
         /// <summary>
-        /// Convert color write in hexadecimal notation to <see cref="System.Drawing.Color"/>Color</see> object.
+        /// Convert color write in hexadecimal notation to <see cref="System.Drawing.Color"/> object.
         /// </summary>
         /// <param name="hexColor">String containing color, i.e.: <example>FFFFFF</example>, <example>#ee0054</example>, <example>#eee</example>.</param>
         /// <returns>Color write in ARGB color space.</returns>
@@ -73,7 +76,7 @@ namespace DotNetColorParser
         }
 
         /// <summary>
-        /// Convert color from CMYK color space to <see cref="System.Drawing.Color"/>Color</see> object.
+        /// Convert color from CMYK color space to <see cref="System.Drawing.Color"/> object.
         /// </summary>
         /// <param name="cyan">Cyan channel expressed as a percentage.</param>
         /// <param name="magenta">Magenta channel expressed as a percentage.</param>
@@ -110,7 +113,7 @@ namespace DotNetColorParser
         }
 
         /// <summary>
-        /// Convert color from HSV color space to <see cref="System.Drawing.Color"/>Color</see> object.
+        /// Convert color from HSV color space to <see cref="System.Drawing.Color"/> object.
         /// </summary>
         /// <param name="hue">Hue channel expressed as a degrees.</param>
         /// <param name="saturation">Saturation channel expressed as a percentage.</param>
@@ -209,7 +212,7 @@ namespace DotNetColorParser
         }
 
         /// <summary>
-        /// Convert color from HSL color space to <see cref="System.Drawing.Color"/>Color</see> object.
+        /// Convert color from HSL color space to <see cref="System.Drawing.Color"/> object.
         /// </summary>
         /// <param name="hue">Hue channel expressed as a degrees.</param>
         /// <param name="saturation">Saturation channel expressed as a percentage.</param>
@@ -252,11 +255,12 @@ namespace DotNetColorParser
         }
 
         /// <summary>
-        /// Convert color from HSL color space with Alpha channel to <see cref="System.Drawing.Color"/>Color</see> object.
+        /// Convert color from HSL color space with Alpha channel to <see cref="System.Drawing.Color"/> object.
         /// </summary>
         /// <param name="hue">Hue channel expressed as a degrees.</param>
         /// <param name="saturation">Saturation channel expressed as a percentage.</param>
         /// <param name="lightness">Lightness channel expressed as a percentage.</param>
+        /// <param name="alpha">Alpha channel expressed as a decimal number from 0 to 1.</param>
         /// <returns>Color write in ARGB color space.</returns>
         public static Color FromHSLA(double hue, double saturation, double lightness, double alpha)
         {

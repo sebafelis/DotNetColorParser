@@ -4,15 +4,23 @@ using System.Text.RegularExpressions;
 
 namespace DotNetColorParser.ColorNotations
 {
+    /// <summary>
+    /// Color notation with <c>hsla</c> prefix expressed in HSL color space with alpha channel.
+    /// </summary>    
+    /// <remarks>
+    /// Recognize all syntax versions with <c>hsla</c> prefix allowed by CSS3 and more.
+    /// </remarks>
     public class HSLANotation : ColorNotation
     {
         private readonly Regex _hslaRE = new Regex(@"^\s*hsla(?:(?:\(\s*(?:(?:(?<huedeg>(?:(?:[12]?[1-9]?\d)|[12]0\d|(?:3[0-5]\d))(?:\.\d+)?)|(?:\.\d+))(?:deg)?|(?<hueturn>0|0?\.\d+)turn|(?<huegrad>0|0?\.\d+)grad|(?<huerad>(?:[0-6](?:\.\d+)?)|(?:\.\d+))rad)(?<space>[,\s]{1})\s*(?<saturation>(?:(?:[1-9]?\d(?:\.\d+)?)|100|(?:\.\d+)))%?\k<space>\s*(?<lightness>(?:(?:[1-9]?\d(?:\.\d+)?)|100|(?:\.\d+)))%?(?:\k<space>|\s*\/)\s*(?:(?:(?<nalpha>(?:1(?:\.0+)?)|(?:0(?:\.\d*)?)|(?:\.\d+)))|(?:(?<palpha>(?:(?:[1-9]?\d(?:\.\d+)?)|100|(?:\.\d+)))%?))\s*\))|(?:\s+(?:(?:(?:(?<huedeg>(?:[12]?[1-9]?\d)|[12]0\d|(?:3[0-5]\d))(?:\.\d+)?)|(?:\.\d+))(?:deg)?|(?<hueturn>0|0?\.\d+)turn|(?<huerad>(?:[0-6](?:\.\d+)?)|(?:\.\d+))rad)(?<space>[,\s]{1})\s*(?<saturation>(?:(?:[1-9]?\d(?:\.\d+)?)|100|(?:\.\d+)))%?\k<space>\s*(?<lightness>(?:(?:[1-9]?\d(?:\.\d+)?)|100|(?:\.\d+)))%?(?:\k<space>|\s*\/)\s*(?:(?:(?<nalpha>(?:1(?:\.0+)?)|(?:0(?:\.\d*)?)|(?:\.\d+)))|(?:(?<palpha>(?:(?:[1-9]?\d(?:\.\d+)?)|100|(?:\.\d+)))%?))))\s*$");
 
+        /// <inheritdoc/>
         public override bool IsMatch(string str)
         {
             return _hslaRE.IsMatch(str);
         }
 
+        /// <inheritdoc/>
         public override Color Parse(string str)
         {
             var match = _hslaRE.Match(str);

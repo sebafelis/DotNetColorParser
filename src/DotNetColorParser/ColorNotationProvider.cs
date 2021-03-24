@@ -6,17 +6,15 @@ using System.Linq;
 
 namespace DotNetColorParser
 {
-    /// <summary>
-    /// Object provides color notations used by <see cref="DotNetColorParser.ColorParser"/>
-    /// </summary>
+    /// <inheritdoc/>
     public class ColorNotationProvider : IColorNotationProvider
     {
         readonly Dictionary<int, IColorNotation> _colorNotations;
 
         /// <summary>
-        /// Create ColorNotationProvider object
+        /// Create ColorNotationProvider object.
         /// </summary>
-        /// <param name="autoConfigure">When <c>true</c> then add all standard implementations of IColorNotation interface.</param>
+        /// <param name="autoConfigure">When <c>true</c> then automatically add all standard implementations of IColorNotation interface.</param>
         public ColorNotationProvider(bool autoConfigure = false)
         {
             _colorNotations = new Dictionary<int, IColorNotation>();
@@ -29,14 +27,25 @@ namespace DotNetColorParser
                 Add(new HSLNotation());
                 Add(new HSLANotation());
                 Add(new HSVNotation());
+#if NETSTANDARD2_1 || NET45
                 Add(new KnownColorNameNotation());
+#endif
             }
         }
 
+        /// <inheritdoc/>
         public int Count => _colorNotations.Count;
 
+        /// <inheritdoc/>
         public bool IsReadOnly => false;
 
+        /// <summary>
+        /// Add color notation
+        /// </summary>
+        /// <param name="item">Color notation object</param>
+        /// <remarks>
+        /// In most case only one object implement specific class can be add to provider.
+        /// </remarks>
         public void Add(IColorNotation item)
         {
             if (item is null)
@@ -47,16 +56,26 @@ namespace DotNetColorParser
             _colorNotations.Add(item.GetHashCode(), item);
         }
 
+        /// <inheritdoc/>
         public void Clear()
         {
             _colorNotations.Clear();
         }
 
+        /// <summary>
+        /// Check is color notation add to provider. 
+        /// </summary>
+        /// <remarks>
+        /// In most case only one object implement specific class can be add to provider.
+        /// </remarks>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public bool Contains(IColorNotation item)
         {
             return _colorNotations.ContainsKey(item.GetHashCode());
         }
 
+        /// <inheritdoc/>
         public void CopyTo(IColorNotation[] array, int arrayIndex)
         {
             if (array == null)
@@ -75,11 +94,25 @@ namespace DotNetColorParser
             }
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection order by <see cref="IColorNotation.Order"/>.
+        /// </summary>
+        /// <returns>
+        /// An enumerator that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator<IColorNotation> GetEnumerator()
         {
             return _colorNotations.Select(s => s.Value).OrderBy(o => o.Order).GetEnumerator();
         }
 
+        /// <summary>
+        /// Remove color notation object.
+        /// </summary>
+        /// <remarks>
+        /// Object is finding by them hash code.
+        /// </remarks>
+        /// <param name="item"></param>
+        /// <returns><c>true</c> if object was found and remove. Otherwise <c>false</c>.</returns>
         public bool Remove(IColorNotation item)
         {
             if (item is null)

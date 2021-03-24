@@ -11,6 +11,12 @@ namespace DotNetColorParser
 
         private static Lazy<IColorNotationProvider> _defaultProvider = new Lazy<IColorNotationProvider>(() => new ColorNotationProvider(true));
 
+        /// <summary>
+        /// Default <see cref="ColorNotationProvider"/> for <see cref="ColorParser"/>.
+        /// </summary>
+        /// <remarks>
+        /// Is use by <seealso cref="ColorParser"/> static methods and <see cref="ColorParser"/> instance with null 
+        /// </remarks>
         public static IColorNotationProvider DefaultProvider
         {
             get
@@ -26,6 +32,16 @@ namespace DotNetColorParser
 
         private static Lazy<ColorParser> _colorParser = new Lazy<ColorParser>();
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="value"><inheritdoc/></param>
+        /// <exception cref="DotNetColorParser.UnkownColorNotationException">
+        /// Throw if color notation is unknown or 
+        /// </exception>
+        /// <exception cref="DotNetColorParser.InvalidColorNotationException">
+        /// Throw if string was recognized as match but parse failed.
+        /// </exception>
         public static Color Parse(string value)
         {
             return _colorParser.Value.ParseColor(value);
@@ -57,12 +73,10 @@ namespace DotNetColorParser
         {
             if (provider is null)
             {
-                _colorNotationProvider = DefaultProvider;
+                throw new ArgumentNullException(nameof(provider));
             }
-            else
-            {
-                _colorNotationProvider = provider;
-            }
+
+            _colorNotationProvider = provider;
         }
 
         /// <summary>
