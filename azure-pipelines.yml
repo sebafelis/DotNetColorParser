@@ -58,20 +58,20 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
-  condition: $(Build.SourceBranchName)=='develop'
+  condition: eq('$(Build.SourceBranchName)','develop')
 - task: NuGetCommand@2
   displayName: 'NuGet push'
-  condition: $(Build.SourceBranchName)=='develop'
+  condition: eq('$(Build.SourceBranchName)','develop')
   inputs:
     command: push
     publishVstsFeed: 'DotNetColorParser/DotNetColorParserBuild'
     allowPackageConflicts: true
 - task: NuGetAuthenticate@0
-  condition: $(Build.SourceBranchName)=='main'
+  condition: eq('$(Build.SourceBranchName)','main')
   inputs:
     nuGetServiceConnections: 'sebafelisNuGetAccount'
 - task: NuGetCommand@2
-  condition: $(Build.SourceBranchName)=='main'
+  condition: eq('$(Build.SourceBranchName)','main')
   inputs:
     command: push
     nuGetFeedType: external
