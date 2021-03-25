@@ -71,6 +71,7 @@ steps:
   inputs:
     nuGetServiceConnections: 'sebafelisNuGetAccount'
 - task: NuGetCommand@2
+  condition: $(Build.SourceBranchName)=='main'
   inputs:
     command: push
     nuGetFeedType: external
