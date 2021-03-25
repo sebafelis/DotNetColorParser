@@ -50,6 +50,7 @@ steps:
     command: pack
     projects: '**/*.sln'
     includesymbols: true
+    buildProperties: SymbolPackageFormat=snupkg
     versioningScheme: byEnvVar
     versionEnvVar: 'GitVersion.NuGetVersion'
 - task: PublishBuildArtifacts@1
@@ -66,6 +67,7 @@ steps:
     command: push
     publishVstsFeed: 'DotNetColorParser/DotNetColorParserBuild'
     allowPackageConflicts: true
+
 # - task: NuGetAuthenticate@0
 #   condition: $(Build.SourceBranchName)=='main'
 #   inputs:
