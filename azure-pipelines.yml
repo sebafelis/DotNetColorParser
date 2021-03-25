@@ -58,29 +58,23 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
-  #condition: $(Build.SourceBranchName)!='main'
 - task: NuGetCommand@2
   displayName: 'NuGet push'
-  #condition: $(Build.SourceBranchName)!='main'
   inputs:
     command: push
     publishVstsFeed: 'DotNetColorParser/DotNetColorParserBuild'
     allowPackageConflicts: true
-# - task: NuGetAuthenticate@0
-#   condition: $(Build.SourceBranchName)=='main'
-#   inputs:
-#     nuGetServiceConnections: 'sebafelisNuGetAccount'
-# - task: NuGetCommand@2
-#   inputs:
-#     command: push
-#     nuGetFeedType: external
-#     publishFeedCredentials: 'sebafelisNuGetAccount'
-#     versioningScheme: byEnvVar
-#     versionEnvVar: 'GitVersion.NuGetVersion'
-
-#- script: dotnet pack /p:PackageVersion=$(GitVersion.NuGetVersion)  # define version variable elsewhere in your pipeline
-# - task: PublishSymbols@2
-#   inputs:
-#     searchPattern: '**/bin/**/*.pdb'
+- task: NuGetAuthenticate@0
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  inputs:
+    nuGetServiceConnections: 'sebafelisNuGetAccount'
+- task: NuGetCommand@2
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  inputs:
+    command: push
+    nuGetFeedType: external
+#    publishFeedCredentials: 'sebafelisNuGetAccount'
+    versioningScheme: byEnvVar
+    versionEnvVar: 'GitVersion.NuGetVersion'
 
 
