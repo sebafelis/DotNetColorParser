@@ -1,10 +1,11 @@
 # DotNetColorParser
 
- ![NuGet Package](https://img.shields.io/nuget/v/DotNetColorParser)
+[![Build Status](https://robolynx.visualstudio.com/DotNetColorParser/_apis/build/status/sebafelis.DotNetColorParser?branchName=main)](https://robolynx.visualstudio.com/DotNetColorParser/_build/latest?definitionId=6&branchName=main)
+[![DotNetColorParser NuGet Package](https://img.shields.io/nuget/v/DotNetColorParser)](https://www.nuget.org/packages/DotNetColorParser/)
+[![DotNetColorParser.Abstractions NuGet Package](https://img.shields.io/nuget/v/DotNetColorParser.Abstractions)](https://www.nuget.org/packages/DotNetColorParser.Abstractions/)
+![Coverage](https://img.shields.io/azure-devops/coverage/robolynx/DotNetColorParser/6/main)
 
-.Net Standard library parsing color strings and converting them to .Net Color object. 
-Library support almost all color notations used in CSS3 and supported color notations are extendable with custom.
-
+.Net library parsing strings with notated colors and converting them to .Net Color object. Library support almost all color notations used in CSS3. Color notations are extendable and customizable.
 
 ## Usage
 
