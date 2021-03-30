@@ -67,14 +67,13 @@ steps:
 - task: NuGetAuthenticate@0
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   inputs:
-    nuGetServiceConnections: 'sebafelisNuGetAccount'
+    nuGetServiceConnections: sebafelisNuGetAccount
 - task: NuGetCommand@2
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   inputs:
     command: push
     nuGetFeedType: external
-#    publishFeedCredentials: 'sebafelisNuGetAccount'
+    publishFeedCredentials: sebafelisNuGetAccount
     versioningScheme: byEnvVar
     versionEnvVar: 'GitVersion.NuGetVersion'
-
 
