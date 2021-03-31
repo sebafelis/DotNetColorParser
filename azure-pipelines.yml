@@ -64,10 +64,6 @@ steps:
     command: push
     publishVstsFeed: 'DotNetColorParser/DotNetColorParserBuild'
     allowPackageConflicts: true
-- task: NuGetAuthenticate@0
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-  inputs:
-    nuGetServiceConnections: sebafelisNuGetAccount
 - task: NuGetCommand@2
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   inputs:
