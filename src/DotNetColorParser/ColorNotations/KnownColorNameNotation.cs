@@ -11,20 +11,185 @@ namespace DotNetColorParser.ColorNotations
     /// <remarks>Notation not supported in .Net Standard 2.0 version now.</remarks>
     public class KnownColorNameNotation : ColorNotation, IColorNotation
     {
-        private static IEnumerable<string> GetKnowColorNames()
+#if NETSTANDARD2_0
+        private static readonly string[] _knownColors = new string[]
         {
-#if NETSTANDARD2_1 || NET45
-            KnownColor[] colors = (KnownColor[])Enum.GetValues(typeof(KnownColor));
-            foreach (KnownColor knowColor in colors)
-            {
-                yield return knowColor.ToString();
-            }
-#else
-            throw new NotImplementedException();
+            "ActiveBorder",
+            "ActiveCaption",
+            "ActiveCaptionText",
+            "AppWorkspace",
+            "Control",
+            "ControlDark",
+            "ControlDarkDark",
+            "ControlLight",
+            "ControlLightLight",
+            "ControlText",
+            "Desktop",
+            "GrayText",
+            "Highlight",
+            "HighlightText",
+            "HotTrack",
+            "InactiveBorder",
+            "InactiveCaption",
+            "InactiveCaptionText",
+            "Info",
+            "InfoText",
+            "Menu",
+            "MenuText",
+            "ScrollBar",
+            "Window",
+            "WindowFrame",
+            "WindowText",
+            "Transparent",
+            "AliceBlue",
+            "AntiqueWhite",
+            "Aqua",
+            "Aquamarine",
+            "Azure",
+            "Beige",
+            "Bisque",
+            "Black",
+            "BlanchedAlmond",
+            "Blue",
+            "BlueViolet",
+            "Brown",
+            "BurlyWood",
+            "CadetBlue",
+            "Chartreuse",
+            "Chocolate",
+            "Coral",
+            "CornflowerBlue",
+            "Cornsilk",
+            "Crimson",
+            "Cyan",
+            "DarkBlue",
+            "DarkCyan",
+            "DarkGoldenrod",
+            "DarkGray",
+            "DarkGreen",
+            "DarkKhaki",
+            "DarkMagenta",
+            "DarkOliveGreen",
+            "DarkOrange",
+            "DarkOrchid",
+            "DarkRed",
+            "DarkSalmon",
+            "DarkSeaGreen",
+            "DarkSlateBlue",
+            "DarkSlateGray",
+            "DarkTurquoise",
+            "DarkViolet",
+            "DeepPink",
+            "DeepSkyBlue",
+            "DimGray",
+            "DodgerBlue",
+            "Firebrick",
+            "FloralWhite",
+            "ForestGreen",
+            "Fuchsia",
+            "Gainsboro",
+            "GhostWhite",
+            "Gold",
+            "Goldenrod",
+            "Gray",
+            "Green",
+            "GreenYellow",
+            "Honeydew",
+            "HotPink",
+            "IndianRed",
+            "Indigo",
+            "Ivory",
+            "Khaki",
+            "Lavender",
+            "LavenderBlush",
+            "LawnGreen",
+            "LemonChiffon",
+            "LightBlue",
+            "LightCoral",
+            "LightCyan",
+            "LightGoldenrodYellow",
+            "LightGray",
+            "LightGreen",
+            "LightPink",
+            "LightSalmon",
+            "LightSeaGreen",
+            "LightSkyBlue",
+            "LightSlateGray",
+            "LightSteelBlue",
+            "LightYellow",
+            "Lime",
+            "LimeGreen",
+            "Linen",
+            "Magenta",
+            "Maroon",
+            "MediumAquamarine",
+            "MediumBlue",
+            "MediumOrchid",
+            "MediumPurple",
+            "MediumSeaGreen",
+            "MediumSlateBlue",
+            "MediumSpringGreen",
+            "MediumTurquoise",
+            "MediumVioletRed",
+            "MidnightBlue",
+            "MintCream",
+            "MistyRose",
+            "Moccasin",
+            "NavajoWhite",
+            "Navy",
+            "OldLace",
+            "Olive",
+            "OliveDrab",
+            "Orange",
+            "OrangeRed",
+            "Orchid",
+            "PaleGoldenrod",
+            "PaleGreen",
+            "PaleTurquoise",
+            "PaleVioletRed",
+            "PapayaWhip",
+            "PeachPuff",
+            "Peru",
+            "Pink",
+            "Plum",
+            "PowderBlue",
+            "Purple",
+            "Red",
+            "RosyBrown",
+            "RoyalBlue",
+            "SaddleBrown",
+            "Salmon",
+            "SandyBrown",
+            "SeaGreen",
+            "SeaShell",
+            "Sienna",
+            "Silver",
+            "SkyBlue",
+            "SlateBlue",
+            "SlateGray",
+            "Snow",
+            "SpringGreen",
+            "SteelBlue",
+            "Tan",
+            "Teal",
+            "Thistle",
+            "Tomato",
+            "Turquoise",
+            "Violet",
+            "Wheat",
+            "White",
+            "WhiteSmoke",
+            "Yellow",
+            "YellowGreen",
+            "ButtonFace",
+            "ButtonHighlight",
+            "ButtonShadow",
+            "GradientActiveCaption",
+            "GradientInactiveCaption",
+            "MenuBar",
+            "MenuHighlight"
+        };
 #endif
-        }
-
-        private readonly Lazy<IEnumerable<string>> _knowKolors = new Lazy<IEnumerable<string>>(() => GetKnowColorNames());
 
         private string CleanString(string str)
         {
@@ -39,26 +204,31 @@ namespace DotNetColorParser.ColorNotations
         /// <inheritdoc/>
         public override bool IsMatch(string str)
         {
-            return _knowKolors.Value.Contains(CleanString(str), StringComparer.InvariantCultureIgnoreCase);
+#if NETSTANDARD2_1 || NET45
+            var color = Color.FromName(CleanString(str));
+            return color.IsKnownColor;
+#else
+            return _knownColors.Contains(CleanString(str));
+#endif
         }
 
         /// <inheritdoc/>
         public override Color Parse(string str)
         {
-#if NETSTANDARD2_1 || NET45
             var color = Color.FromName(CleanString(str));
+
+#if NETSTANDARD2_1 || NET45
             if (!color.IsKnownColor)
             {
                 throw new InvalidColorNotationException();
             }
-            return color;
 #else
-            throw new NotImplementedException();
+            if (!_knownColors.Contains(CleanString(str)))
+            {
+                throw new InvalidColorNotationException();
+            }
 #endif
+            return color;
         }
-
-        /// <inheritdoc/>
-        /// <value>Value is equal 100 because this notation should be match as last of from the standard notations.</value>
-        public override int Order => base.Order + 100;
     }
 }
