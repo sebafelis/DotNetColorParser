@@ -4,7 +4,7 @@
 		<TargetFrameworks>net45;netstandard2.0;netstandard2.1</TargetFrameworks>
 		<Authors>Sebastian Felis</Authors>
 		<Company>RoboLynx</Company>
-		<Description>Abstractions for .Net Standard library parsing color strings and converting them to .Net's Color object. Library support almost all color notations used in CSS3 and supported color notations are extendable with custom.
+		<Description>Abstractions for .Net library parsing color strings and converting them to .Net's Color object. Library support almost all color notations used by CSS3 and supported color notations are extendable with custom.
 		</Description>
 		<Copyright>Sebastian Felis © 2021</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -15,6 +15,14 @@
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<Product>DotNetColorParser</Product>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageIcon>DotNetColorParser_128.png</PackageIcon>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\assets\DotNetColorParser_128.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+	</ItemGroup>
 
 </Project>
