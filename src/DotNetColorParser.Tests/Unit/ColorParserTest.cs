@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using DotNetColorParser.Exceptions;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

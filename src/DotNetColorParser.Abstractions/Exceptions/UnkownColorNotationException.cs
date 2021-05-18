@@ -1,45 +1,45 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DotNetColorParser
+namespace DotNetColorParser.Exceptions
 {
     /// <summary>
-    /// When specify color can not be parse correctly.
+    /// Color notation is not recognize.
     /// </summary>
-    public class InvalidColorNotationException : ArgumentException
+    public class UnkownColorNotationException : ArgumentException
     {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public InvalidColorNotationException()
+        public UnkownColorNotationException()
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public InvalidColorNotationException(string message) : base(message)
+        public UnkownColorNotationException(string message) : base(message)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public InvalidColorNotationException(string message, Exception innerException) : base(message, innerException)
+        public UnkownColorNotationException(string message, Exception innerException) : base(message, innerException)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public InvalidColorNotationException(string message, string paramName) : base(message, paramName)
+        public UnkownColorNotationException(string message, string paramName) : base(message, paramName)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public InvalidColorNotationException(string message, string paramName, Exception innerException) : base(message, paramName, innerException)
+        public UnkownColorNotationException(string message, string paramName, Exception innerException) : base(message, paramName, innerException)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        protected InvalidColorNotationException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected UnkownColorNotationException(SerializationInfo info, StreamingContext context) : base(info, context)
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
         }

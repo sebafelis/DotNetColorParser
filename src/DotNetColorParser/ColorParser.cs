@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNetColorParser.Exceptions;
+using System;
 using System.Drawing;
 
 namespace DotNetColorParser
@@ -32,28 +33,18 @@ namespace DotNetColorParser
 
         private static Lazy<ColorParser> _colorParser = new Lazy<ColorParser>();
 
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        /// <param name="value"><inheritdoc/></param>
-        /// <exception cref="DotNetColorParser.UnkownColorNotationException">
-        /// Throw if color notation is unknown or 
-        /// </exception>
-        /// <exception cref="DotNetColorParser.InvalidColorNotationException">
-        /// Throw if string was recognized as match but parse failed.
-        /// </exception>
+        /// <inheritdoc cref="ParseColor(string)"/>
         public static Color Parse(string value)
         {
             return _colorParser.Value.ParseColor(value);
         }
 
         /// <summary>
-        /// Convert the color saved as a string to <see cref="System.Drawing.Color"/> object. 
-        /// Allowed string notation is defined by attribute <typeparamref name="T"/>.
+        /// <inheritdoc cref="ParseColor(string)" path="/summary"/> This method use only one color notation specify as <typeparamref name="T"/>.
         /// </summary>
-        /// <typeparam name="T">Allow color notation</typeparam>
-        /// <param name="value">Color saved as a string</param>
-        /// <returns>Color write in ARGB color space.</returns>
+        /// <inheritdoc cref="ParseColor(string)" path="/returns"/>
+        /// <inheritdoc cref="ParseColor(string)" path="/param"/>
+        /// <inheritdoc cref="ParseColor(string)" path="/exception"/>
         public static Color Parse<T>(string value) where T : IColorNotation
         {
             var provider = new ColorNotationProvider(false)
@@ -63,10 +54,30 @@ namespace DotNetColorParser
             return new ColorParser(provider).ParseColor(value);
         }
 
+        /// <inheritdoc cref="TryParseColor(string, out Color)"/>
+        public static bool TryParse(string value, out Color color)
+        {
+            return _colorParser.Value.TryParseColor(value, out color);
+        }
+
+        /// <summary>
+        /// <inheritdoc cref="TryParseColor(string, out Color)" path="/summary"/> This method use only one color notation specify as <typeparamref name="T"/>.
+        /// </summary>
+        /// <inheritdoc cref="TryParseColor(string, out Color)" path="/returns"/>
+        /// <inheritdoc cref="TryParseColor(string, out Color)" path="/param"/>
+        public static bool TryParse<T>(string value, out Color color) where T : IColorNotation
+        {
+            var provider = new ColorNotationProvider(false)
+            {
+                Activator.CreateInstance<T>()
+            };
+            return new ColorParser(provider).TryParseColor(value, out color);
+        }
+
         private readonly IColorNotationProvider _colorNotationProvider;
 
         /// <summary>
-        /// Create ColorParser object
+        /// Create ColorParser object.
         /// </summary>
         /// <param name="provider">Color notations provider</param>
         public ColorParser(IColorNotationProvider provider)
@@ -79,12 +90,7 @@ namespace DotNetColorParser
             _colorNotationProvider = provider;
         }
 
-        /// <summary>
-        /// Convert the color saved as a string to <see cref="System.Drawing.Color"/> object.
-        /// Allowed string notations are defined in Color Notation Provider passed to constructor <see cref="DotNetColorParser"/>
-        /// </summary>
-        /// <param name="value">Color write as string</param>
-        /// <returns>Color write in ARGB color space.</returns>
+        /// <inheritdoc/>
         public Color ParseColor(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -101,6 +107,21 @@ namespace DotNetColorParser
             }
 
             throw new UnkownColorNotationException();
+        }
+
+        /// <inheritdoc/>
+        public bool TryParseColor(string value, out Color color)
+        {
+            try
+            {
+                color = ParseColor(value);
+                return true;
+            }
+            catch (Exception ex) when (ex is InvalidColorNotationException || ex is UnkownColorNotationException)
+            {
+                color = Color.Empty;
+                return false;
+            }
         }
     }
 }

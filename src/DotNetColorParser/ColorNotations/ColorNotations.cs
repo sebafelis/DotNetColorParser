@@ -14,8 +14,8 @@ namespace DotNetColorParser.ColorNotations
         /// If all instances of your class has always the same output for specify input then you should left this implementation.
         /// Otherwise if class is customizable (e.g. by constructor parameters) you should make this method dependent on these customizations.
         /// </remarks>
-        /// <param name="obj"></param>
-        /// <returns><inheritdoc/></returns>
+        /// <param name="obj"><inheritdoc cref="System.Type.Equals(object)" path="/param"/></param>
+        /// <returns><inheritdoc cref="System.Type.Equals(object)" path="/returns"/></returns>
         public override bool Equals(object obj)
         {
             return this.GetType().Equals(obj.GetType());
@@ -28,7 +28,7 @@ namespace DotNetColorParser.ColorNotations
         /// If all instances of your class has always the same output for specify input then you should left this implementation.
         /// Otherwise if class is customizable (e.g. by constructor parameters) you should make this method dependent on these customizations.
         /// </remarks>
-        /// <returns><inheritdoc/></returns>
+        /// <returns><inheritdoc cref="System.Type.GetHashCode" path="/returns"/></returns>
         public override int GetHashCode()
         {
             return this.GetType().GetHashCode();
@@ -38,9 +38,6 @@ namespace DotNetColorParser.ColorNotations
         public abstract bool IsMatch(string str);
 
         /// <inheritdoc/>
-        /// <exception cref="DotNetColorParser.InvalidColorNotationException">
-        /// Throw if string was recognized as match but parse failed.
-        /// </exception>
         public abstract Color Parse(string str);
         
         /// <inheritdoc/>

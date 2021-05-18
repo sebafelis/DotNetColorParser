@@ -18,6 +18,9 @@ namespace DotNetColorParser
         /// Parse the input string in correct notation and create <see cref="System.Drawing.Color"/> object.
         /// </summary>
         /// <param name="str">Color notify as a string.</param>
+        /// <exception cref="Exceptions.InvalidColorNotationException">
+        /// When string was recognized as match but parse failed.
+        /// </exception>
         Color Parse(string str);
 
         /// <summary>

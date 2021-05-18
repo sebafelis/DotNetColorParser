@@ -1,4 +1,5 @@
 ﻿using DotNetColorParser.ColorNotations;
+using DotNetColorParser.Exceptions;
 using System;
 using Xunit;
 

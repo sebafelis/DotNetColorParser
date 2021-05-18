@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNetColorParser.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,7 +9,6 @@ namespace DotNetColorParser.ColorNotations
     /// <summary>
     /// Color notation based on defined by KnownColor class color keywords corresponding specify RGB colors.
     /// </summary>
-    /// <remarks>Notation not supported in .Net Standard 2.0 version now.</remarks>
     public class KnownColorNameNotation : ColorNotation, IColorNotation
     {
 #if NETSTANDARD2_0

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using DotNetColorParser.Exceptions;
+using System.Drawing;
 using System.Text.RegularExpressions;
 
 namespace DotNetColorParser.ColorNotations

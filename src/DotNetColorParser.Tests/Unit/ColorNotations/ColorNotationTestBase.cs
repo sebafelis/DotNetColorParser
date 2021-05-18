@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNetColorParser.Exceptions;
+using System;
 using Xunit;
 
 namespace DotNetColorParser.Tests.Unit.ColorNotations
