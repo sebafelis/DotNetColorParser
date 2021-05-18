@@ -20,7 +20,7 @@ pool:
 variables:
   solution: '**/*.sln'
   testProject: '**/*Tests/*.csproj'
-  gitVersionPath: 'GitVersion.yml'
+  gitVersionPath: 'build/GitVersion.yml'
   buildConfiguration: 'Release'
   publishOnGithubRelease: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   publishOnNugetOrg: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
