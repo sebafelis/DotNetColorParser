@@ -50,6 +50,27 @@ steps:
   inputs:
     useConfigFile: true
     configFilePath: '$(gitVersionPath)'
+- powershell: | 
+    $changelog = Get-Content -Path .\CHANGELOG.md -Raw
+    if ($changelog -match "##\s?\[Unreleased\]") 
+    {
+        $current_date = Get-Date -UFormat "%Y-%m-%d"
+        $changelog -replace "##\s?\[Unreleased\].*","## [$current_version] - $current_date" | Set-Content -Path .\CHANGELOG.md
+
+        Write-Host "Unreleased section in CHANGELOG.md was updated into current version [$current_version] - $current_date."
+    }
+    elseif ($changelog -match "##\s?\[$current_version\]")
+    {
+        Write-Host "##vso[task.LogIssue type=warning;]CHANGELOG.md already contains section with current version."
+    }
+    else
+    {
+        Write-Host "##vso[task.LogIssue type=error;]CHANGELOG.md do not contains Unreleased section with new changes."
+        exit 1
+    }
+  displayName: 'Update Unrelease section in CHANGELOG to current version'
+  env:
+    current_version: $(GitVersion.NuGetVersion)
 - task: DotNetCoreCLI@2
   displayName: 'Build project ($(buildConfiguration) configuration)'
   inputs:
@@ -100,6 +121,24 @@ steps:
     publishFeedCredentials: 'nuget.org_robolynx'
     versioningScheme: byEnvVar
     versionEnvVar: 'GitVersion.NuGetVersion'
+- powershell: | 
+    $regex_current_version = $current_version -replace '\.','\.'
+    $regex_pattern = "(?s)(?:\n##\s\[$regex_current_version\].*?\r\n(?:\s*\r\n)*)(?<content>.*?)(?:\r\n##\s\[\d+\.\d+\.\d+].*?\r\n|\s*\Z)"
+
+    $changelog = Get-Content -Path .\CHANGELOG.md -Raw
+    if ($changelog -match "##\s?\[$regex_current_version\]") 
+    {
+        $changes = $changelog | Select-String -Pattern $regex_pattern
+
+        Write-Host "##vso[task.setvariable variable=changes]$($changes.Matches[0].Groups['content'])"
+    }
+    else 
+    {
+        Write-Host "##vso[task.LogIssue type=warning;]CHANGELOG.md don't contains section for current version."
+    }
+  displayName: 'Extract release note from CHANGELOG.md'
+  env:
+    current_version: $(GitVersion.NuGetVersion)
 - task: GitHubRelease@1
   displayName: 'Publish on Github Release'
   condition: and(succeeded(), eq(variables['publishOnGithubRelease'], true))
@@ -114,5 +153,6 @@ steps:
     isPreRelease: false
     assetUploadMode: delete
     assets: '$(Build.ArtifactStagingDirectory)/*'
-    addChangeLog: false   
-
+    addChangeLog: false  
+    releaseNotesSource: input
+    releaseNotes: $(changes)
