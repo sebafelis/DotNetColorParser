@@ -25,6 +25,7 @@ variables:
   publishOnGithubRelease: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   publishOnNugetOrg: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   addTagToRepository: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  updateChangelogVersion: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
 
 steps:
 - checkout: self
@@ -58,19 +59,30 @@ steps:
         $changelog -replace "##\s?\[Unreleased\].*","## [$current_version] - $current_date" | Set-Content -Path .\CHANGELOG.md
 
         Write-Host "Unreleased section in CHANGELOG.md was updated into current version [$current_version] - $current_date."
+        Write-Host "##vso[task.setvariable variable=changelogUpdated]true"
     }
     elseif ($changelog -match "##\s?\[$current_version\]")
     {
         Write-Host "##vso[task.LogIssue type=warning;]CHANGELOG.md already contains section with current version."
+        Write-Host "##vso[task.setvariable variable=changelogUpdated]false"
     }
     else
     {
         Write-Host "##vso[task.LogIssue type=error;]CHANGELOG.md do not contains Unreleased section with new changes."
+        Write-Host "##vso[task.setvariable variable=changelogUpdated]false"
         exit 1
     }
   displayName: 'Update Unrelease section in CHANGELOG to current version'
+  condition: and(succeeded(), eq(variables['updateChangelogVersion'], true))
   env:
     current_version: $(GitVersion.NuGetVersion)
+- script: |
+    git add CHANGELOG.md 
+    git commit -m "CHNAGELOG.md update"
+    git push origin $(Build.SourceBranchName)
+  condition: and(succeeded(), and(eq(variables['updateChangelogVersion'], true), eq(variables['changelogUpdated'], true))
+  workingDirectory: $(Build.SourcesDirectory)
+  displayName: 'Commit changes in CHANGELOG.md'
 - task: DotNetCoreCLI@2
   displayName: 'Build project ($(buildConfiguration) configuration)'
   inputs:
@@ -130,13 +142,14 @@ steps:
     {
         $changes = $changelog | Select-String -Pattern $regex_pattern
 
-        Write-Host "##vso[task.setvariable variable=changes]$($changes.Matches[0].Groups['content'])"
+        Write-Host "##vso[task.setvariable variable=releaseNotes]$($changes.Matches[0].Groups['content'])"
     }
     else 
     {
-        Write-Host "##vso[task.LogIssue type=warning;]CHANGELOG.md don't contains section for current version."
+        Write-Host "##vso[task.LogIssue type=error;]CHANGELOG.md don't contains section for current version."
     }
   displayName: 'Extract release note from CHANGELOG.md'
+  condition: and(succeeded(), eq(variables['publishOnGithubRelease'], true))
   env:
     current_version: $(GitVersion.NuGetVersion)
 - task: GitHubRelease@1
@@ -154,5 +167,5 @@ steps:
     assetUploadMode: delete
     assets: '$(Build.ArtifactStagingDirectory)/*'
     addChangeLog: false  
-    releaseNotesSource: input
-    releaseNotes: $(changes)
+    releaseNotesSource: inline
+    releaseNotesInline: $(releaseNotes)
