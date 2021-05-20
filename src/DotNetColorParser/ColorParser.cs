@@ -117,7 +117,7 @@ namespace DotNetColorParser
                 color = ParseColor(value);
                 return true;
             }
-            catch (Exception ex) when (ex is InvalidColorNotationException || ex is UnkownColorNotationException)
+            catch (Exception ex) when (ex is InvalidColorNotationException || ex is UnkownColorNotationException || ex is ArgumentException)
             {
                 color = Color.Empty;
                 return false;
