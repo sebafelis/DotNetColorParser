@@ -22,6 +22,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>DotNetColorParser.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Include="..\..\assets\DotNetColorParser_128.png">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>

@@ -11,7 +11,7 @@ namespace DotNetColorParser
         /// <returns>The value in degrees</returns>
         public static double RadiansToDegrees(this double val)
         {
-            return (180 / Math.PI) * val;
+            return Math.Round((180 / Math.PI) * val, MidpointRounding.AwayFromZero);
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace DotNetColorParser
         /// <returns>The value in degrees</returns>
         public static double TurnsToDegrees(this double val)
         {
-            return 360 * val;
+            return Math.Round(360 * val, MidpointRounding.AwayFromZero);
         }
 
         /// <summary>
