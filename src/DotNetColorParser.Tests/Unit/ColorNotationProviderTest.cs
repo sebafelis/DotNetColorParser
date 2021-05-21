@@ -15,7 +15,8 @@ namespace DotNetColorParser.Tests.Unit
             _colorNotations = new ColorNotationProvider() { _colorNotationInstance };
         }
 
-        public void AddMethod_WithNewNotation_WhenNotationIsNotRegistered_ThenProviderContainsIt()
+        [Fact]
+        public void Add_NewNotation_WhenNotationIsNotRegistered_ThenProviderContainsIt()
         {
             //Assign
             var colorNotation = GetColorNotationMock(0, 666);
@@ -27,7 +28,8 @@ namespace DotNetColorParser.Tests.Unit
             Assert.Contains(colorNotation, _colorNotations);
         }
 
-        public void AddMethod_WithAlredyRegistredNotation_ThrowArgumentException()
+        [Fact]
+        public void Add_AlredyRegistredNotation_ThrowArgumentException()
         {
             //Act
             Action act = () => _colorNotations.Add(_colorNotationInstance);
@@ -36,16 +38,18 @@ namespace DotNetColorParser.Tests.Unit
             Assert.Throws<ArgumentException>(act);
         }
 
-        public void AddMethod_WithNull_ThrowArgumentNullException()
+        [Fact]
+        public void Add_Null_ThrowArgumentNullException()
         {
             //Act
-            Action act = () => _colorNotations.Add(_colorNotationInstance);
+            Action act = () => _colorNotations.Add(null);
 
             //Assert
             Assert.Throws<ArgumentNullException>(act);
         }
 
-        public void RemoveRemove_WithAlredyRegistredNotation_ThenReturnTrue_AndProviderDoesNotContainsItAnymore()
+        [Fact]
+        public void Remove_AlredyRegistredNotation_ThenReturnTrue_AndProviderDoesNotContainsItAnymore()
         {
             //Act
             var result = _colorNotations.Remove(_colorNotationInstance);
@@ -55,7 +59,8 @@ namespace DotNetColorParser.Tests.Unit
             Assert.DoesNotContain(_colorNotationInstance, _colorNotations);
         }
 
-        public void RemoveMethod_WithNotRegistredNotation_ReturnFalse()
+        [Fact]
+        public void Remove_NotRegistredNotation_ReturnFalse()
         {
             //Assign
             var colorNotation = GetColorNotationMock(0, 666);
@@ -67,7 +72,8 @@ namespace DotNetColorParser.Tests.Unit
             Assert.False(result);
         }
 
-        public void ContainsMethod_WithRegistredNotation_ReturnTrue()
+        [Fact]
+        public void Contains_WhenNotationIsRegistred_ReturnTrue()
         {
             //Act
             var result = _colorNotations.Contains(_colorNotationInstance);
@@ -76,13 +82,48 @@ namespace DotNetColorParser.Tests.Unit
             Assert.True(result);
         }
 
-        public void ContainsMethod_WithNotRegistredNotation_ReturnFalse()
+        [Fact]
+        public void Contains_WhenNotationIsNotRegistred_ReturnFalse()
         {
             //Act
             var result = _colorNotations.Contains(_colorNotationInstance);
 
             //Assert
             Assert.True(result);
+        }
+
+        [Fact]
+        public void GetEnumerator_ReturnCorrectOrder()
+        {
+            //Arrange
+            var colorNotations = new ColorNotationProvider() {
+                GetColorNotationMock(0, 555),
+                GetColorNotationMock(2, 565),
+                GetColorNotationMock(2, 785),
+                GetColorNotationMock(3, 805),
+                GetColorNotationMock(0, 570)
+            };
+            var lastOrderValue = 0;
+
+            //Act
+            var result = colorNotations.GetEnumerator();
+
+            //Assert
+            while (result.MoveNext())
+            {
+                Assert.True(lastOrderValue <= result.Current.Order, "Order parameter value is less then before order value");
+                lastOrderValue = result.Current.Order;
+            }
+        }
+
+        [Fact]
+        public void Clear_ShouldClearCollection()
+        {
+            //Act
+            _colorNotations.Clear();
+
+            //Assert
+            Assert.Empty(_colorNotations);
         }
 
         private IColorNotation GetColorNotationMock(int order, int hashCode)

@@ -237,6 +237,10 @@ namespace DotNetColorParser.Tests
             yield return new object[] { "rgba( 255, 255, 255, 0.8 )" };
             yield return new object[] { "rgba(255,255,255,1)" };
             yield return new object[] { "rgba(2,42,14,0.1)" };
+            yield return new object[] { "rgba(100%, 100%, 100%, 0.6)" };
+            yield return new object[] { "rgba( 100%, 100%, 100%, 0.8 )" };
+            yield return new object[] { "rgba(100%,100%,100%,1)" };
+            yield return new object[] { "rgba(1.53%,35.55%,5.44%,.1)" };
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
