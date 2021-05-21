@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
 namespace DotNetColorParser.Exceptions
@@ -6,6 +7,7 @@ namespace DotNetColorParser.Exceptions
     /// <summary>
     /// Specify color can not be parse correctly.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class InvalidColorNotationException : ArgumentException
     {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
