@@ -80,7 +80,7 @@ steps:
     git add CHANGELOG.md 
     git commit -m "CHNAGELOG.md update"
     git push origin $(Build.SourceBranchName)
-  condition: and(succeeded(), and(eq(variables['updateChangelogVersion'], true), eq(variables['changelogUpdated'], true))
+  condition: and(succeeded(), and(eq(variables['updateChangelogVersion'], true), eq(variables['changelogUpdated'], true)))
   workingDirectory: $(Build.SourcesDirectory)
   displayName: 'Commit changes in CHANGELOG.md'
 - task: DotNetCoreCLI@2
