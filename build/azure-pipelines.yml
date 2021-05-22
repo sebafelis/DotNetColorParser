@@ -26,6 +26,8 @@ variables:
   publishOnNugetOrg: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   addTagToRepository: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   updateChangelogVersion: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  gitEmail: 'devops@robolynx.pl'
+  gitUserName: 'DevOps Pipeline'   
 
 steps:
 - checkout: self
@@ -51,6 +53,10 @@ steps:
   inputs:
     useConfigFile: true
     configFilePath: '$(gitVersionPath)'
+- script: |
+    git config --global user.email $gitEmail
+    git config --global user.name "$gitUserName"
+  displayName: 'Set GIT Author identity'
 - powershell: | 
     $changelog = Get-Content -Path .\CHANGELOG.md -Raw
     if ($changelog -match "##\s?\[Unreleased\]") 
@@ -141,8 +147,10 @@ steps:
     if ($changelog -match "##\s?\[$regex_current_version\]") 
     {
         $changes = $changelog | Select-String -Pattern $regex_pattern
-
-        Write-Host "##vso[task.setvariable variable=releaseNotes]$($changes.Matches[0].Groups['content'])"
+        $releaseNotes = $changes.Matches[0].Groups['content'] -replace "\r\n","%0D%0A"
+        Write-Host "##vso[task.setvariable variable=releaseNotes]$releaseNotes"
+        Write-Host "Extracted release note:"
+        Write-Host "$releaseNotes"
     }
     else 
     {
