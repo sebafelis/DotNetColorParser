@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
  
 ## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+## [2.0.0] - 2021-05-22
  
 ### Added
 - Icon to NuGet package
